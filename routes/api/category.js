@@ -35,7 +35,7 @@ router.post(
   }
 );
 
-router.get('/', auth([Role.Admin, Role.User]), async (req, res) => {
+router.get('/all', auth([Role.Admin, Role.User]), async (req, res) => {
   try {
     const allCategories = await Category.find();
     res.json(allCategories);
@@ -82,7 +82,9 @@ router.put(
 
 router.delete('/delete/:id', auth([Role.Admin]), async (req, res) => {
   try {
-    const deleteCategory = await Category.findOneAndDelete({ _id: req.params.id });
+    const deleteCategory = await Category.findOneAndDelete({
+      _id: req.params.id,
+    });
     return res.status(200).json(deleteCategory);
   } catch (error) {
     console.error(error);

@@ -21,6 +21,7 @@
     "express-validator": "^7.0.1",
     "gravatar": "^1.8.2",
     "jsonwebtoken": "^9.0.0",
+    "mongodb": "^6.3.0",
     "mongoose": "^7.2.1",
     "normalize-url": "^5.3.1"
   }

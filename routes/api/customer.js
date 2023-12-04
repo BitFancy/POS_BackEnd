@@ -10,7 +10,7 @@ router.post(
   '/add',
   auth([Role.Admin, Role.User]),
   check('customerName', 'CustomerName is required').notEmpty(),
-  check('email', 'Email is required').notEmpty(),
+  check('email', 'Email is required').isEmail(),
   check('phoneNumber', 'PhoneNumber is required').notEmpty(),
   check('city', 'City is required').notEmpty(),
   check('address', 'Adress is required').notEmpty(),
@@ -18,7 +18,7 @@ router.post(
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
+      return res.status(500).json({ errors: errors.array() });
     }
     try {
       const { customerName, email, phoneNumber, city, address, zipCode } = req.body;

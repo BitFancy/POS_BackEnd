@@ -11,6 +11,7 @@ router.post(
   auth([Role.Admin, Role.User]),
   check('dish', 'Dish is required').notEmpty(),
   check('customer', 'Customer is required').notEmpty(),
+  check('totalPrice', 'Total Price is required').notEmpty(),
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {

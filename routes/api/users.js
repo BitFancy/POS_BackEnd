@@ -38,12 +38,15 @@ router.post(
     ).isLength({ min: 6 }),
     check('role', 'Role is required').notEmpty(),
   ],
+  auth([Role.Admin]),
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      return res.status(400).json({ data : {
-       error : errors.array()
-      } });
+      return res.status(400).json({
+        data: {
+          error: errors.array(),
+        },
+      });
     }
 
     const { userName, email, password, role } = req.body;
@@ -134,9 +137,7 @@ router.post(
       const isMatch = await bcrypt.compare(password, user.password);
 
       if (!isMatch) {
-        return res
-          .status(400)
-          .json({ errors: [{ msg: 'Invalid Password' }] });
+        return res.status(400).json({ errors: [{ msg: 'Invalid Password' }] });
       }
 
       const payload = {
