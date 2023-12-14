@@ -70,12 +70,15 @@ router.post(
       );
 
       user = new User({
-        userName,
-        email,
+        userName: userName,
+        email: email,
         avatar,
-        password,
-        role,
+        password: password,
+        role: role,
       });
+
+      console.log(role);
+      // console.log(user)
 
       const salt = await bcrypt.genSalt(10);
 
@@ -86,7 +89,7 @@ router.post(
           msg: 'User created successfully',
           user: user,
         });
-      });
+      }).catch((err) => console.log(err));
 
       // const payload = {
       //   user: {
@@ -153,6 +156,7 @@ router.post(
         (err, token) => {
           if (err) throw err;
           res.json({ token });
+          // console.log(token);
         }
       );
     } catch (err) {

@@ -20,7 +20,9 @@ const auth = (roles) => async (req, res, next) => {
         const user = await User.findById(decoded.user.id);
         if (user) {
           // console.log(user.role);
-          if (roles.findIndex((role) => role === user.role) !== -1) next();
+          // console.log(roles.includes(user.role));
+          // if (roles.findIndex((role) => role === user.role) !== -1) next();
+          if (roles.includes(user.role)) next();
           else res.status(404).json({ msg: 'Auth Error' });
         } else {
           res.status(404).json({ msg: 'User not found' });

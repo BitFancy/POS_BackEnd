@@ -9,20 +9,20 @@ const Order = require('../../models/Order');
 router.post(
   '/add',
   auth([Role.Admin, Role.User]),
-  check('dish', 'Dish is required').notEmpty(),
+  check('dishes', 'Dishes are required').notEmpty(),
   check('customer', 'Customer is required').notEmpty(),
-  check('totalPrice', 'Total Price is required').notEmpty(),
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
     try {
-      const { dish, customer, status, totalPrice } = req.body;
+      const { customer, dishes, totalPrice, paymethod, status } = req.body;
       const newOrder = new Order({
-        dish: dish, // array of products
+        dishes: dishes, // array of products
         customer: customer, // object
         status: status, // string
+        paymethod: paymethod,
         totalPrice: totalPrice, // number
       });
       await newOrder.save();
@@ -76,7 +76,7 @@ router.delete('/delete/:id', auth([Role.Admin]), async (req, res) => {
     if (deleteOrder) {
       return res.status(200).json(deleteOrder);
     }
-    return res.send({mgs: "Order not found or already deleted"});
+    return res.send({ mgs: 'Order not found or already deleted' });
   } catch (error) {
     console.error(error);
     return res.status(500).json({ msg: 'Server error' });

@@ -21,9 +21,11 @@ const UserSchema = new Schema(
       required: true,
     },
     role: {
-      type: Number,
-      // enum: Object.keys(Roles),
-      default: 0,
+      // type: Number,
+      type: String,
+      enum: Object.keys(Roles),
+      // default: 2,
+      default: Roles.User,
     },
   },
   { timestamps: true }

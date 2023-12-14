@@ -3,25 +3,47 @@ const Schema = mongoose.Schema;
 
 const OrderSchema = new Schema(
   {
-    dish: [
-      [
-        {
-          type: Schema.Types.ObjectId,
-          ref: 'product',
-        }
-      ],
-    ],
     customer: {
       type: Schema.Types.ObjectId,
       ref: 'customer',
     },
-    status: {
-      type: Number,
-      default: 0,
-      required: true,
-    },
+    dishes: [
+      {
+        id: {
+          type: String,
+          required: true,
+        },
+        dishName: {
+          type: String,
+          required: true,
+        },
+        productList: [
+          {
+            type: Schema.Types.ObjectId,
+            ref: 'product',
+          },
+        ],
+        dishPrice: {
+          type: Number,
+          required: true,
+        },
+        counter: {
+          type: Number,
+          required: true,
+        },
+      },
+    ],
     totalPrice: {
       type: Number,
+      required: true,
+    },
+    paymethod: {
+      type: String,
+      ref: 'paymethod',
+    },
+    status: {
+      type: String,
+      default: 'New',
       required: true,
     },
   },

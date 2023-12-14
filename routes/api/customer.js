@@ -21,13 +21,21 @@ router.post(
       return res.status(500).json({ errors: errors.array() });
     }
     try {
-      const { customerName, email, phoneNumber, city, address, zipCode } = req.body;
-      let customer = await Customer.findOne({ email }); // check if customer exists
-      if (customer) {
+      const { customerName, email, phoneNumber, city, address, zipCode } =
+        req.body;
+      let customerByEmail = await Customer.findOne({ email }); // check if customer exists
+      if (customerByEmail) {
         return res
           .status(400)
           .json({ errors: [{ msg: 'Customer already exists' }] });
       }
+      let customerByPhoneNumber = await Customer.findOne({ phoneNumber }); // check if customer exists
+      if (customerByPhoneNumber) {
+        return res
+          .status(400)
+          .json({ errors: [{ msg: 'Phone Number already exists' }] });
+      }
+
       const newCustomer = new Customer({
         customerName: customerName,
         email: email,
@@ -49,6 +57,16 @@ router.get('/', auth([Role.Admin, Role.User]), async (req, res) => {
   try {
     const allCustomers = await Customer.find();
     res.json(allCustomers);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server Error');
+  }
+});
+
+router.get('/:id', auth([Role.Admin, Role.User]), async (req, res) => {
+  try {
+    const customer = await Customer.findOne({ _id: req.params.id });
+    res.json(customer);
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server Error');
@@ -91,7 +109,7 @@ router.delete('/delete/:id', auth([Role.Admin]), async (req, res) => {
     if (deleteCustomer) {
       return res.status(200).json(deleteCustomer);
     }
-    return res.send({msg: 'Customer not found or already deleted'});
+    return res.send({ msg: 'Customer not found or already deleted' });
   } catch (error) {
     console.error(error);
     return res.status(500).json({ msg: 'Server error' });

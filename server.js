@@ -4,18 +4,18 @@ const path = require('path');
 const cors = require('cors');
 
 const app = express();
-const corsOptions = {
-  origin: 'http://localhost:8002',
-  credentials: true, //access-control-allow-credentials:true
-  optionSuccessStatus: 200,
-};
+// const corsOptions = {
+//   origin: 'http://localhost:8002',
+//   credentials: true, //access-control-allow-credentials:true
+//   optionSuccessStatus: 200,
+// };
 
 // Connect Database
 connectDB();
 
 // Init Middleware
 // app.use(cors(corsOptions));
-app.use(cors("*"));
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 // Define Routes
