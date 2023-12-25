@@ -47,9 +47,9 @@ router.get('/', auth([Role.Admin, Role.User]), async (req, res) => {
   }
 });
 
-router.get('/:id', auth([Role.Admin, Role.User]), async (req, res) => {
+router.get('/:productId', auth([Role.Admin, Role.User]), async (req, res) => {
   try {
-    const product = await Product.findOne({ _id: req.params.id });
+    const product = await Product.findOne({ _id: req.params.productId });
     res.json(product);
   } catch (err) {
     console.error(err.message);
