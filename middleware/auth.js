@@ -18,6 +18,7 @@ const auth = (roles) => async (req, res, next) => {
       } else {
         req.user = decoded.user;
         const user = await User.findById(decoded.user.id);
+        
         if (user) {
           // console.log(user.role);
           // console.log(roles.includes(user.role));
