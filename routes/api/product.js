@@ -47,6 +47,22 @@ router.get('/', auth([Role.Admin, Role.User]), async (req, res) => {
   }
 });
 
+router.get(
+  '/product-detail/:id',
+  auth([Role.Admin, Role.User]),
+  async (req, res) => {
+    try {
+      const productDetail = await Product.findOne({
+        _id: req.params.id,
+      }).populate({ path: 'category' });
+      res.json(productDetail);
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).send('Server Error');
+    }
+  }
+);
+
 router.get('/:productId', auth([Role.Admin, Role.User]), async (req, res) => {
   try {
     const product = await Product.findOne({ _id: req.params.productId });

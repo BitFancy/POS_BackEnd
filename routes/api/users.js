@@ -24,6 +24,15 @@ router.get('/all', auth([Role.User, Role.Admin]), async (req, res) => {
   }
 });
 
+router.get('/me', auth([Role.User, Role.Admin]), async (req, res) => {
+  const user = await User.findOne({ _id: req.user.id });
+  if (!user) {
+    res.status(405).json({ msg: 'No user' });
+  } else {
+    res.json(user);
+  }
+});
+
 // @route    POST api/users
 // @desc     Register user
 // @access   Public
@@ -84,12 +93,15 @@ router.post(
 
       user.password = await bcrypt.hash(password, salt);
 
-      await user.save().then(() => {
-        res.status(201).json({
-          msg: 'User created successfully',
-          user: user,
-        });
-      }).catch((err) => console.log(err));
+      await user
+        .save()
+        .then(() => {
+          res.status(201).json({
+            msg: 'User created successfully',
+            user: user,
+          });
+        })
+        .catch((err) => console.log(err));
 
       // const payload = {
       //   user: {
@@ -155,8 +167,8 @@ router.post(
         { expiresIn: '1d' },
         (err, token) => {
           if (err) throw err;
+          console.log(token);
           res.json({ token });
-          // console.log(token);
         }
       );
     } catch (err) {
