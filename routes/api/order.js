@@ -17,11 +17,12 @@ router.post(
       return res.status(400).json({ errors: errors.array() });
     }
     try {
-      const { customer, dishes, totalPrice, paymethod, status } = req.body;
+      const { orderType, customer, dishes, totalPrice, paymethod } = req.body;
       const newOrder = new Order({
+        orderType: orderType,
         dishes: dishes, // array of products
         customer: customer, // object
-        status: status, // string
+        // status: status, // string
         paymethod: paymethod,
         totalPrice: totalPrice, // number
       });

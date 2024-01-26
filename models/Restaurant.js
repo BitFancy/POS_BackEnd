@@ -22,7 +22,7 @@ const RestaurantSchema = new Schema(
       type: String,
       required: true,
     },
-    zipcode: {
+    postcode: {
       type: String,
       required: true,
     },

@@ -19,7 +19,8 @@ router.get('/all', auth([Role.User, Role.Admin]), async (req, res) => {
     const users = await User.find();
     res.json(users);
   } catch (err) {
-    console.error(err.message);
+    console.error(err.message, '23');
+    console.log(err.message, 'erroe');
     res.status(500).send('Server Error');
   }
 });
@@ -167,8 +168,7 @@ router.post(
         { expiresIn: '1d' },
         (err, token) => {
           if (err) throw err;
-          console.log(token);
-          res.json({ token });
+          res.json({ token, user });
         }
       );
     } catch (err) {

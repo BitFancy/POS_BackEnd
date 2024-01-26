@@ -12,17 +12,23 @@ router.post(
   check('customerName', 'CustomerName is required').notEmpty(),
   check('email', 'Email is required').isEmail(),
   check('phoneNumber', 'PhoneNumber is required').notEmpty(),
-  check('city', 'City is required').notEmpty(),
-  check('address', 'Adress is required').notEmpty(),
-  check('zipCode', 'ZipCode is required').notEmpty(),
+  check('houseNumber', 'HouseNmber is required').notEmpty(),
+  check('streetName', 'StreetName is required').notEmpty(),
+  check('postCode', 'PostCode is required').notEmpty(),
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(500).json({ errors: errors.array() });
     }
     try {
-      const { customerName, email, phoneNumber, city, address, zipCode } =
-        req.body;
+      const {
+        customerName,
+        email,
+        phoneNumber,
+        houseNumber,
+        streetName,
+        postCode,
+      } = req.body;
       let customerByEmail = await Customer.findOne({ email }); // check if customer exists
       if (customerByEmail) {
         return res
@@ -40,9 +46,9 @@ router.post(
         customerName: customerName,
         email: email,
         phoneNumber: phoneNumber,
-        city: city,
-        address: address,
-        zipCode: zipCode,
+        houseNumber: houseNumber,
+        streetName: streetName,
+        postCode: postCode,
       });
       await newCustomer.save();
       res.json(newCustomer);
@@ -79,9 +85,9 @@ router.put(
   check('customerName', 'CustomerName is required').notEmpty(),
   check('email', 'Email is required').notEmpty(),
   check('phoneNumber', 'PhoneNumber is required').notEmpty(),
-  check('city', 'City is required').notEmpty(),
-  check('address', 'Adress is required').notEmpty(),
-  check('zipCode', 'ZipCode is required').notEmpty(),
+  check('houseNumber', 'houseNumber is required').notEmpty(),
+  check('streeName', 'StreeName is required').notEmpty(),
+  check('postCode', 'postCode is required').notEmpty(),
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {

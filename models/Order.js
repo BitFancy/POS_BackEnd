@@ -3,6 +3,10 @@ const Schema = mongoose.Schema;
 
 const OrderSchema = new Schema(
   {
+    orderType: {
+      type: String,
+      require: true,
+    },
     customer: {
       type: Schema.Types.ObjectId,
       ref: 'customer',
@@ -41,11 +45,11 @@ const OrderSchema = new Schema(
       type: String,
       ref: 'paymethod',
     },
-    status: {
-      type: String,
-      default: 'New',
-      required: true,
-    },
+    // status: {
+    //   type: String,
+    //   default: 'New',
+    //   required: true,
+    // },
   },
   { timestamps: true }
 );

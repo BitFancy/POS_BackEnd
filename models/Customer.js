@@ -18,17 +18,17 @@ const CustomerSchema = new Schema(
       unique: true,
       required: true,
     },
-    city: {
+    houseNumber: {
       type: String,
       required: true,
       trim: true,
     },
-    address: {
+    streetName: {
       type: String,
       required: true,
       trim: true,
     },
-    zipCode: {
+    postCode: {
       type: String,
       required: true,
       trim: true,

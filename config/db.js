@@ -29,6 +29,7 @@
 const mongoose = require('mongoose');
 const config = require('config');
 const uri = config.get('ATLAS_URI');
+// const uri = config.get('mongoURI');
 
 const connectDB = async () => {
   try {
